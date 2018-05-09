@@ -1,0 +1,109 @@
+@using Microsoft.AspNetCore.Blazor.Services
+@using BlazorDemo.Shared
+@page "/"
+@page "/page/{Page}"
+@inject HttpClient Http
+@inject IUriHelper UriHelper
+
+<div class="row">
+    <div class="col-md-9">
+        <h1>Books database</h1>
+    </div>
+</div>
+
+<div class="row margin-bottom-20">
+    <div class="col-md-9">
+        <button class="btn btn-primary" onclick=@AddNew>Add new</button>
+    </div>
+</div>
+
+@if (Books == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th></th>
+        </tr>
+        @foreach (var book in Books.Results)
+        {
+            var id = book.Id;
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>@book.ISBN</td>
+                <td>
+                    <button class="btn green" onclick="@(() => EditBook(id) )">Edit</button>
+                    <button class="btn red" data-toggle="modal" data-target="#myModal">Delete</button>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <Pager Result="Books" UrlTemplate="/Books/Index/page/{0}" PageChanged=@PagerPageChanged />
+}
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@functions {
+    [Parameter]
+    string Page { get; set; } = "1";
+
+    PagedResult<Book> Books;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("Current page: " + Page);
+        await LoadBooks(int.Parse(Page));
+
+        //await base.OnParametersSetAsync();
+    }
+
+    private async Task LoadBooks(int page)
+    {
+        Books = await Http.GetJsonAsync<PagedResult<Book>>("/Books/Index/page/" + page);
+    }
+
+    private void PagerPageChanged(int page)
+    {
+        Console.WriteLine("Page: " + page);
+        UriHelper.NavigateTo("/page/" + page);
+    }
+
+    private void AddNew()
+    {
+        UriHelper.NavigateTo("/edit/0");
+    }
+
+    private void EditBook(int id)
+    {
+        UriHelper.NavigateTo("/edit/" + id);
+    }
+}
