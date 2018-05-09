@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Files", "External Files", "{3DEF9835-ADCC-4E7F-87F7-4008CCDCFB38}"
 	ProjectSection(SolutionItems) = preProject
 		External Files\Books.bacpac = External Files\Books.bacpac
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
