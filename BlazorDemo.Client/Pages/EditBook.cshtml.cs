@@ -9,8 +9,11 @@ namespace BlazorDemo.Client.Pages
 {
     public class EditBookModel : BlazorComponent
     {
-        protected IUriHelper UriHelper;
-        protected HttpClient Http;
+        [Inject]
+        protected IUriHelper UriHelper { get; set; }
+
+        [Inject]
+        protected HttpClient Http { get; set; }
 
         [Parameter]
         protected string Id { get; private set; } = "0";

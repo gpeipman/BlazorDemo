@@ -1,9 +1,6 @@
-﻿@using Microsoft.AspNetCore.Blazor.Services
-@page "/edit"
+﻿@page "/edit"
 @page "/edit/{Id}"
 @inherits EditBookModel
-@inject HttpClient HttpInjected
-@inject IUriHelper UriHelperInjected
 
 <h1>@PageTitle</h1>
 
@@ -33,13 +30,4 @@
             </form>
         </div>
     </div>
-}
-
-@functions
-{
-    protected override void OnInit()
-    {
-        Http = HttpInjected;
-        UriHelper = UriHelperInjected;
-    }
 }
