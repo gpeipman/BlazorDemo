@@ -139,3 +139,15 @@ app {
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
+.table .btn.green {
+    background-color:green;
+    color: white;
+    line-height: 14px;
+    font-size: 14px;
+}
+.table .btn.red {
+    background-color: red;
+    color: white;
+    line-height: 14px;
+    font-size: 14px;
+}

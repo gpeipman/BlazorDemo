@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Blazor.Services
+@using Microsoft.AspNetCore.Blazor.Browser.Interop
 @using BlazorDemo.Shared
 @page "/"
 @page "/page/{Page}"
@@ -33,13 +34,14 @@ else
         @foreach (var book in Books.Results)
         {
             var id = book.Id;
+            var title = book.Title;
             <tr>
                 <td>@book.Id</td>
                 <td>@book.Title</td>
                 <td>@book.ISBN</td>
                 <td>
-                    <button class="btn green" onclick="@(() => EditBook(id) )">Edit</button>
-                    <button class="btn red" data-toggle="modal" data-target="#myModal">Delete</button>
+                    <button class="btn green" onclick="@(() => EditBook(id) )">...</button>
+                    <button class="btn red deleteBook" onclick="@(() => ConfirmDelete(id, title) )">x</button>
                 </td>
             </tr>
         }
@@ -54,27 +56,35 @@ else
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
+                <h4 class="modal-title">Confirm delete</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                Modal body..
+                <input type="hidden" id="bookToDeleteField" bind=@DeleteId />
+                Are you sure you want to delete book <span id="bookTitleField"></span>?
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick=@DeleteBook>Delete</button>
             </div>
 
         </div>
     </div>
 </div>
 
-@functions {
+
+
+
+@functions 
+{
     [Parameter]
     string Page { get; set; } = "1";
+
+    int DeleteId { get; set; } = 0;
 
     PagedResult<Book> Books;
 
@@ -105,5 +115,20 @@ else
     private void EditBook(int id)
     {
         UriHelper.NavigateTo("/edit/" + id);
+    }
+
+    private void ConfirmDelete(int id, string title)
+    {
+        DeleteId = id;
+        RegisteredFunction.Invoke<bool>("confirmDelete", title);
+    }
+
+    private async Task DeleteBook()
+    {
+        RegisteredFunction.Invoke<bool>("hideDeleteDialog");
+
+        await Http.PostAsync("/Books/Delete/" + DeleteId, null);
+
+        await LoadBooks(int.Parse(Page));
     }
 }
