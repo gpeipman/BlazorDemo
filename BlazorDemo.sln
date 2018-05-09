@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDemo.Client", "Blazor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDemo.Shared", "BlazorDemo.Shared\BlazorDemo.Shared.csproj", "{551A92D4-2A8B-464B-8F1F-612897E40604}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Files", "External Files", "{3DEF9835-ADCC-4E7F-87F7-4008CCDCFB38}"
+	ProjectSection(SolutionItems) = preProject
+		External Files\Books.bacpac = External Files\Books.bacpac
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
