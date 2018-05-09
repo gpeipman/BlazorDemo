@@ -20,6 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\EditBook.cshtml" />
+    <None Include="Pages\Index.cshtml" />
+    <None Include="Shared\Pager.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <BlazorGenerate Remove="Shared\Pager.cshtml" />
   </ItemGroup>
 
@@ -28,16 +34,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\EditBook.cshtml" />
-    <None Include="Shared\Pager.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <BlazorGenerate Remove="Pages\EditBook.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Pages\EditBook.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Index.cshtml" />
   </ItemGroup>
 
 </Project>

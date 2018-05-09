@@ -1,10 +1,9 @@
-@using Microsoft.AspNetCore.Blazor.Services
-@using Microsoft.AspNetCore.Blazor.Browser.Interop
-@using BlazorDemo.Shared
+﻿@using Microsoft.AspNetCore.Blazor.Services
 @page "/"
 @page "/page/{Page}"
-@inject HttpClient Http
-@inject IUriHelper UriHelper
+@inject HttpClient HttpInjected
+@inject IUriHelper UriHelperInjected
+@inherits IndexModel
 
 <div class="row">
     <div class="col-md-9">
@@ -20,34 +19,34 @@
 
 @if (Books == null)
 {
-    <p><em>Loading...</em></p>
+<p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table table-striped">
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>ISBN</th>
-            <th></th>
-        </tr>
-        @foreach (var book in Books.Results)
+<table class="table table-striped">
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>ISBN</th>
+        <th></th>
+    </tr>
+    @foreach (var book in Books.Results)
         {
             var id = book.Id;
             var title = book.Title;
-            <tr>
-                <td>@book.Id</td>
-                <td>@book.Title</td>
-                <td>@book.ISBN</td>
-                <td>
-                    <button class="btn green" onclick="@(() => EditBook(id) )">...</button>
-                    <button class="btn red deleteBook" onclick="@(() => ConfirmDelete(id, title) )">x</button>
-                </td>
-            </tr>
+    <tr>
+        <td>@book.Id</td>
+        <td>@book.Title</td>
+        <td>@book.ISBN</td>
+        <td>
+            <button class="btn green" onclick="@(() => EditBook(id) )">...</button>
+            <button class="btn red deleteBook" onclick="@(() => ConfirmDelete(id, title) )">x</button>
+        </td>
+    </tr>
         }
-    </table>
+</table>
 
-    <Pager Result="Books" UrlTemplate="/Books/Index/page/{0}" PageChanged=@PagerPageChanged />
+<Pager Result="Books" PageChanged=@PagerPageChanged />
 }
 
 <div class="modal" id="myModal">
@@ -76,59 +75,11 @@ else
     </div>
 </div>
 
-
-
-
-@functions 
+@functions
 {
-    [Parameter]
-    string Page { get; set; } = "1";
-
-    int DeleteId { get; set; } = 0;
-
-    PagedResult<Book> Books;
-
-    protected override async Task OnParametersSetAsync()
+    protected override void OnInit()
     {
-        Console.WriteLine("Current page: " + Page);
-        await LoadBooks(int.Parse(Page));
-
-        //await base.OnParametersSetAsync();
-    }
-
-    private async Task LoadBooks(int page)
-    {
-        Books = await Http.GetJsonAsync<PagedResult<Book>>("/Books/Index/page/" + page);
-    }
-
-    private void PagerPageChanged(int page)
-    {
-        Console.WriteLine("Page: " + page);
-        UriHelper.NavigateTo("/page/" + page);
-    }
-
-    private void AddNew()
-    {
-        UriHelper.NavigateTo("/edit/0");
-    }
-
-    private void EditBook(int id)
-    {
-        UriHelper.NavigateTo("/edit/" + id);
-    }
-
-    private void ConfirmDelete(int id, string title)
-    {
-        DeleteId = id;
-        RegisteredFunction.Invoke<bool>("confirmDelete", title);
-    }
-
-    private async Task DeleteBook()
-    {
-        RegisteredFunction.Invoke<bool>("hideDeleteDialog");
-
-        await Http.PostAsync("/Books/Delete/" + DeleteId, null);
-
-        await LoadBooks(int.Parse(Page));
+        Http = HttpInjected;
+        UriHelper = UriHelperInjected;
     }
 }

@@ -1,4 +1,4 @@
-﻿@using BlazorDemo.Shared
+﻿@inherits PagerModel
 
 @if (Result != null)
 {
@@ -7,8 +7,8 @@
             @if (Result.PageCount > 1)
             {
                 <ul class="pagination pull-right">
-                    <li><button  onclick="@(() => PagerButtonClicked(1))" class="btn">&laquo;</button></li>
-                    @for (var i = startIndex; i <= finishIndex; i++)
+                    <li><button onclick="@(() => PagerButtonClicked(1))" class="btn">&laquo;</button></li>
+                    @for (var i = StartIndex; i <= FinishIndex; i++)
                     {
                         var currentIndex = i;
                         @if (i == Result.CurrentPage)
@@ -25,31 +25,4 @@
             }
         </div>
     </div>
-}
-
-@functions {
-    [Parameter]
-    PagedResultBase Result { get; set; } // Demonstrates how a parent component can supply parameters
-
-    [Parameter]
-    string UrlTemplate { get; set; } // Demonstrates how a parent component can supply parameters
-    
-    [Parameter]
-    Action<int> PageChanged { get; set; }
-
-    int startIndex = 0;
-    int finishIndex = 0;
-
-    protected override void OnParametersSet()
-    {
-        startIndex = Math.Max(Result.CurrentPage - 5, 1);
-        finishIndex = Math.Min(Result.CurrentPage + 5, Result.PageCount);
-
-        base.OnParametersSet();
-    }
-
-    private void PagerButtonClicked(int page)
-    {
-        PageChanged?.Invoke(page);
-    }
 }

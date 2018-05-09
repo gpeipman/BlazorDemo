@@ -1,79 +1,45 @@
 ﻿@using Microsoft.AspNetCore.Blazor.Services
-@using BlazorDemo.Shared
 @page "/edit"
 @page "/edit/{Id}"
-@inject HttpClient Http
-@inject IUriHelper UriHelper
+@inherits EditBookModel
+@inject HttpClient HttpInjected
+@inject IUriHelper UriHelperInjected
 
 <h1>@PageTitle</h1>
 
-<div class="row">
-    <div class="col-md-9">
-        <form class="form form-horizontal">
-            <div class="form-group">
-                <label class="col-md-2 control-label">Title:</label>
-                <div class="col-md-7">
-                    <input type="text" bind=@Title class="form-control" />
+@if (CurrentBook != null)
+{
+    <div class="row">
+        <div class="col-md-9">
+            <form class="form form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Title:</label>
+                    <div class="col-md-7">
+                        <input type="text" bind=@CurrentBook.Title class="form-control" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">ISBN:</label>
-                <div class="col-md-7">
-                    <input type="text" bind=@ISBN class="form-control" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label">ISBN:</label>
+                    <div class="col-md-7">
+                        <input type="text" bind=@CurrentBook.ISBN class="form-control" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label"></label>
-                <div class="col-md-7">
-                    <button class="btn btn-primary" onclick=@Save>Save</button>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-7">
+                        <button class="btn btn-primary" onclick=@Save>Save</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+}
 
-@functions {
-    [Parameter]
-    string Id { get; set; }
-
-    string PageTitle { get; set; }
-
-    string Title { get; set; }
-    string ISBN { get; set; }
-
-    protected override async Task OnParametersSetAsync()
+@functions
+{
+    protected override void OnInit()
     {
-        if (Id == null || Id == "0")
-        {
-            PageTitle = "Add book";
-        }
-        else
-        {
-            PageTitle = "Edit book";
-
-            await LoadBook(int.Parse(Id));
-        }
-    }
-
-    private async Task LoadBook(int id)
-    {
-        var book = await Http.GetJsonAsync<Book>("/Books/Get/" + id);
-        Title = book.Title;
-        ISBN = book.ISBN;
-    }
-
-    private async Task Save()
-    {
-        var book = new Book()
-        {
-            Id = int.Parse(Id),
-            Title = Title,
-            ISBN = ISBN
-        };
-
-
-        await Http.PostJsonAsync("/Books/Save", book);
-
-        UriHelper.NavigateTo("/");
+        Http = HttpInjected;
+        UriHelper = UriHelperInjected;
     }
 }
