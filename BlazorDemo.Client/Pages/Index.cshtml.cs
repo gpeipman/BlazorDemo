@@ -1,22 +1,14 @@
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
-using Microsoft.AspNetCore.Blazor.Services;
 
 namespace BlazorDemo.Client.Pages
 {
-    public class IndexModel : BlazorComponent
+    public class IndexModel : BaseComponent
     {
-        [Inject]
-        protected IUriHelper UriHelper { get; set; }
-
-        [Inject]
-        protected HttpClient Http { get; set; }
-
         [Parameter]
         protected string Page { get; set; } = "1";
 
