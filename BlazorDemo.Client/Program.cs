@@ -1,20 +1,20 @@
-﻿using Microsoft.AspNetCore.Blazor.Browser.Rendering;
+﻿using BlazorDemo.Shared;
+using Microsoft.AspNetCore.Blazor.Browser.Rendering;
 using Microsoft.AspNetCore.Blazor.Browser.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace BlazorDemo.Client
 {
-    public class Program
+public class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var serviceProvider = new BrowserServiceProvider(services =>
         {
-            var serviceProvider = new BrowserServiceProvider(services =>
-            {
-                // Add any custom services here
-            });
+            services.AddSingleton<IBooksClient, BooksClient>();
+        });
 
-            new BrowserRenderer(serviceProvider).AddComponent<App>("app");
-        }
+        new BrowserRenderer(serviceProvider).AddComponent<App>("app");
     }
+}
 }

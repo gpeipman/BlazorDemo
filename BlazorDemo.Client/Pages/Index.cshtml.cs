@@ -23,12 +23,12 @@ namespace BlazorDemo.Client.Pages
 
         private async Task LoadBooks(int page)
         {
-            Books = await Http.GetJsonAsync<PagedResult<Book>>("/Books/Index/page/" + page);
+            //Books = await Http.GetJsonAsync<PagedResult<Book>>("/Books/Index/page/" + page);
+            Books = await BooksClient.ListBooks(page);
         }
 
         protected void PagerPageChanged(int page)
         {
-            Console.WriteLine("Page: " + page);
             UriHelper.NavigateTo("/page/" + page);
         }
 
@@ -52,7 +52,7 @@ namespace BlazorDemo.Client.Pages
         {
             RegisteredFunction.Invoke<bool>("hideDeleteDialog");
 
-            await Http.PostAsync("/Books/Delete/" + DeleteId, null);
+            await BooksClient.DeleteBook(DeleteId);
 
             await LoadBooks(int.Parse(Page));
         }

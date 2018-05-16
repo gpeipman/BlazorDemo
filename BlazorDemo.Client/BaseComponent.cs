@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Services;
 
@@ -10,6 +11,6 @@ namespace BlazorDemo.Client
         protected IUriHelper UriHelper { get; set; }
 
         [Inject]
-        protected HttpClient Http { get; set; }
+        protected IBooksClient BooksClient { get; set; }
     }
 }

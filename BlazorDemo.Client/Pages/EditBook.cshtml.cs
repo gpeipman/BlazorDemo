@@ -29,12 +29,12 @@ namespace BlazorDemo.Client.Pages
 
         protected async Task LoadBook(int id)
         {
-            CurrentBook = await Http.GetJsonAsync<Book>("/Books/Get/" + id);
+            CurrentBook = await BooksClient.GetBook(id);
         }
 
         protected async Task Save()
         {
-            await Http.PostJsonAsync("/Books/Save", CurrentBook);
+            await BooksClient.SaveBook(CurrentBook);
 
             UriHelper.NavigateTo("/");
         }

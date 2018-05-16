@@ -11,6 +11,7 @@ Solution contains:
 * Displaying of delete confirmation dialog and deleting of books
 * Fully functioning add/edit form
 * Pager component and support for data paging
+* Dependency injection with custom service classes
 
 ## Tools
 

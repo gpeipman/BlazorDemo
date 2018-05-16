@@ -16,34 +16,34 @@
 
 @if (Books == null)
 {
-<p><em>Loading...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
-<table class="table table-striped">
-    <tr>
-        <th>Id</th>
-        <th>Title</th>
-        <th>ISBN</th>
-        <th></th>
-    </tr>
-    @foreach (var book in Books.Results)
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th></th>
+        </tr>
+        @foreach (var book in Books.Results)
         {
             var id = book.Id;
             var title = book.Title;
-    <tr>
-        <td>@book.Id</td>
-        <td>@book.Title</td>
-        <td>@book.ISBN</td>
-        <td>
-            <button class="btn green" onclick="@(() => EditBook(id) )">...</button>
-            <button class="btn red deleteBook" onclick="@(() => ConfirmDelete(id, title) )">x</button>
-        </td>
-    </tr>
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>@book.ISBN</td>
+                <td>
+                    <button class="btn green" onclick="@(() => EditBook(id) )">...</button>
+                    <button class="btn red deleteBook" onclick="@(() => ConfirmDelete(id, title) )">x</button>
+                </td>
+            </tr>
         }
-</table>
+    </table>
 
-<Pager Result="Books" PageChanged=@PagerPageChanged />
+    <Pager Result=@Books PageChanged=@PagerPageChanged />
 }
 
 <div class="modal" id="myModal">
