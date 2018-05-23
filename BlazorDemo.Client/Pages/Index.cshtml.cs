@@ -53,7 +53,6 @@ namespace BlazorDemo.Client.Pages
             RegisteredFunction.Invoke<bool>("hideDeleteDialog");
 
             await BooksClient.DeleteBook(DeleteId);
-
             await LoadBooks(int.Parse(Page));
         }
     }
