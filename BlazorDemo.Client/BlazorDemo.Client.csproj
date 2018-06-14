@@ -4,49 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <LangVersion>7.3</LangVersion>
-
-    <!-- Temporary workaround for a VS build issue -->
-    <BlazorRebuildOnFileChange>false</BlazorRebuildOnFileChange>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor.Runtime" Version="0.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
+    <!--<DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.4.0" />-->
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorDemo.Shared\BlazorDemo.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Pages\EditBook.cshtml" />
-    <None Include="Pages\Index.cshtml" />
-    <None Include="Shared\Pager.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Shared\Pager.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Shared\Pager.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Pages\EditBook.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\EditBook.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Pages\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\Index.cshtml" />
-  </ItemGroup>
-
+  
 </Project>

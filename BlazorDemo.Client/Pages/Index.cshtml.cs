@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
 
@@ -23,7 +22,6 @@ namespace BlazorDemo.Client.Pages
 
         private async Task LoadBooks(int page)
         {
-            //Books = await Http.GetJsonAsync<PagedResult<Book>>("/Books/Index/page/" + page);
             Books = await BooksClient.ListBooks(page);
         }
 
