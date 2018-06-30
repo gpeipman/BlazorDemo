@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor;
@@ -34,8 +35,9 @@ namespace BlazorDemo.Client.Pages
 
         protected async Task Save()
         {
+            Console.WriteLine("SAVE");
             await BooksClient.SaveBook(CurrentBook);
-
+            Console.WriteLine("SAVED");
             UriHelper.NavigateTo("/");
         }
     }

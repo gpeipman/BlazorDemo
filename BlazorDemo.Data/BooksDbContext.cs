@@ -1,7 +1,8 @@
+﻿using System;
 using BlazorDemo.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazorDemo.Server.Data
+namespace BlazorDemo.Data
 {
     public class BooksDbContext : DbContext
     {
@@ -9,6 +10,6 @@ namespace BlazorDemo.Server.Data
 
         public BooksDbContext(DbContextOptions<BooksDbContext> options) : base(options)
         {
-        }        
+        }
     }
 }

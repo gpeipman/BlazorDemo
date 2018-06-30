@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using BlazorDemo.Server.Data;
+using BlazorDemo.Data;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Mvc;
 

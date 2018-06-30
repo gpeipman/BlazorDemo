@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Linq;
 using BlazorDemo.Shared;
 
-namespace BlazorDemo.Server.Data
+namespace BlazorDemo.Data
 {
     public static class PagedResultExtensions
     {
