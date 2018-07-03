@@ -45,9 +45,10 @@ namespace BlazorDemo.AzureFunctionsBackend
         private static void LoadConnectionString()
         {
             var builder = new ConfigurationBuilder();
-            var settingsPath = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
+            var settingsPath = Path.Combine(Environment.CurrentDirectory, "local.settings.json");
 
-            builder.AddJsonFile(settingsPath, optional: false);
+            builder.AddJsonFile(settingsPath, optional: true);
+            builder.AddEnvironmentVariables();
 
             var configuration = builder.Build();
 

@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Blazor;
 
 namespace BlazorDemo.Client
 {
-    public class BooksClient : IBooksClient
+    public class BooksAzureFunctionsClient : IBooksClient
     {
         private readonly HttpClient _httpClient;
 
-        public BooksClient(HttpClient httpClient)
+        private const string FunctionsHost = "https://*****.azurewebsites.net/api";
+        private const string FunctionsKey = "<YOUR FUNCTIONS KEY>";
+
+        public BooksAzureFunctionsClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -21,24 +24,28 @@ namespace BlazorDemo.Client
 
         public async Task DeleteBook(int id)
         {
-            await _httpClient.PostAsync("/Books/Delete/" + id, null);
+            var url = FunctionsHost + "/Books/Delete/" + id + "?code=" + FunctionsKey;
+
+            await _httpClient.PostAsync(url, null);
         }
 
         public async Task<PagedResult<Book>> ListBooks(int page)
         {
-            var url = "/Books/Index/page/" + page;
+            var url = FunctionsHost + "/Books/Index/page/" + page + "?code=" + FunctionsKey;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
         }
 
         public async Task<Book> GetBook(int id)
         {
-            return await _httpClient.GetJsonAsync<Book>("/Books/Get/" + id);
+            var url = FunctionsHost + "/Books/Get/" + id + "?code=" + FunctionsKey;
+
+            return await _httpClient.GetJsonAsync<Book>(url);
         }
 
         public async Task SaveBook(Book book)
         {
-            var url = "/Books/Save";
+            var url = FunctionsHost + "/Books/Save" + "?code=" + FunctionsKey;
 
             await _httpClient.PostJsonAsync<Book>(url, book);
         }

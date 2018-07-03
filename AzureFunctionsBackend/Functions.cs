@@ -42,18 +42,19 @@ namespace BlazorDemo.AzureFunctionsBackend
         }
 
         [FunctionName("Save")]
-        public static void Save([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Save")]HttpRequest req, TraceWriter log)
+        public static IActionResult Save([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Save")]HttpRequest req, TraceWriter log)
         {
             using (var reader = new StreamReader(req.Body, Encoding.UTF8))
             using (var context = (new BooksDbContextFactory()).CreateDbContext())
             {
                 var body = reader.ReadToEnd();
-                log.Info("Request body: " + body);
                 var book = JsonConvert.DeserializeObject<Book>(body);
 
                 context.Update(book);
                 context.SaveChanges();
             }
+
+            return null;
         }
 
         [FunctionName("Delete")]

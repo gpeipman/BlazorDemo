@@ -5,16 +5,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorDemo.Client
 {
-public class Program
-{
-    static void Main(string[] args)
+    public class Program
     {
-        var serviceProvider = new BrowserServiceProvider(services =>
+        static void Main(string[] args)
         {
-            services.AddSingleton<IBooksClient, BooksClient>();
-        });
+            var serviceProvider = new BrowserServiceProvider(services =>
+            {
+                services.AddSingleton<IBooksClient, BooksClient>();
+                //services.AddSingleton<IBooksClient, BooksAzureFunctionsClient>();
+            });
 
-        new BrowserRenderer(serviceProvider).AddComponent<App>("app");
+            new BrowserRenderer(serviceProvider).AddComponent<App>("app");
+        }
     }
-}
 }
