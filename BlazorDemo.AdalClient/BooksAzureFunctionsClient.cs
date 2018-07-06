@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor;
 
-namespace BlazorDemo.Client
+namespace BlazorDemo.AdalClient
 {
     public class BooksAzureFunctionsClient : IBooksClient
     {
@@ -21,11 +21,22 @@ namespace BlazorDemo.Client
 
         public async Task DeleteBook(Book book)
         {
+            if(!string.IsNullOrEmpty(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            }
             await DeleteBook(book.Id);
         }
 
         public async Task DeleteBook(int id)
         {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            }
+
             var url = FunctionsHost + "/Books/Delete/" + id + "?code=" + FunctionsKey;
 
             await _httpClient.PostAsync(url, null);
@@ -33,6 +44,12 @@ namespace BlazorDemo.Client
 
         public async Task<PagedResult<Book>> ListBooks(int page)
         {
+            if(!string.IsNullOrEmpty(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            }
+
             var url = FunctionsHost + "/Books/Index/page/" + page + "?code=" + FunctionsKey;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
@@ -47,6 +64,12 @@ namespace BlazorDemo.Client
 
         public async Task SaveBook(Book book)
         {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            }
+
             var url = FunctionsHost + "/Books/Save" + "?code=" + FunctionsKey;
 
             await _httpClient.PostJsonAsync<Book>(url, book);

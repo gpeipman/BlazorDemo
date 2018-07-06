@@ -9,6 +9,8 @@ namespace BlazorDemo.Client
     {
         private readonly HttpClient _httpClient;
 
+        public string Token { get; set; }
+
         public BooksClient(HttpClient httpClient)
         {
             _httpClient = httpClient;

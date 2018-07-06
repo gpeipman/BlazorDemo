@@ -9,5 +9,6 @@ namespace BlazorDemo.Shared
         Task SaveBook(Book book);
         Task DeleteBook(Book book);
         Task DeleteBook(int id);
+        string Token { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor.Components;
 
-namespace BlazorDemo.Client.Shared
+namespace BlazorDemo.AdalClient.Shared
 {
     public class PagerModel : BlazorComponent
     {

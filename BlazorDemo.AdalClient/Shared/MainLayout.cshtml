@@ -1,0 +1,26 @@
+@inherits BlazorLayoutComponent
+@using Microsoft.AspNetCore.Blazor.Browser.Interop
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        <div class="ms-md-auto" style="margin-left:10px">Hello, @UserName</div>
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+@functions {
+    protected string UserName { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        UserName = RegisteredFunction.Invoke<string>("getUserName");
+    }
+}

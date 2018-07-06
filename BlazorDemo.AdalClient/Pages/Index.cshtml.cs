@@ -1,10 +1,9 @@
 using System;
-using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
 
-namespace BlazorDemo.Client.Pages
+namespace BlazorDemo.AdalClient.Pages
 {
     public class IndexModel : BaseComponent
     {
@@ -14,15 +13,22 @@ namespace BlazorDemo.Client.Pages
         protected int DeleteId { get; set; } = 0;
         protected PagedResult<Book> Books;
 
-        protected override async Task OnParametersSetAsync()
+        protected override void OnParametersSet()
         {
-            Console.WriteLine("Current page: " + Page);
-            await LoadBooks(int.Parse(Page));
+            LoadBooks(int.Parse(Page));
         }
 
-        private async Task LoadBooks(int page)
+        private void LoadBooks(int page)
         {
-            Books = await BooksClient.ListBooks(page);
+            Action<string> action = async (token) => 
+            {
+                BooksClient.Token = token;
+                Books = await BooksClient.ListBooks(page);
+
+                StateHasChanged();           
+            };
+
+            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
         }
 
         protected void PagerPageChanged(int page)
@@ -46,12 +52,20 @@ namespace BlazorDemo.Client.Pages
             RegisteredFunction.Invoke<bool>("confirmDelete", title);
         }
 
-        protected async Task DeleteBook()
+        protected void DeleteBook()
         {
             RegisteredFunction.Invoke<bool>("hideDeleteDialog");
 
-            await BooksClient.DeleteBook(DeleteId);
-            await LoadBooks(int.Parse(Page));
+            Action<string> action = async (token) =>
+            {
+                BooksClient.Token = token;
+                await BooksClient.DeleteBook(DeleteId);
+
+                LoadBooks(int.Parse(Page));
+                StateHasChanged();
+            };
+
+            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
         }
     }
 }
