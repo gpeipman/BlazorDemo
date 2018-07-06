@@ -4,8 +4,8 @@ var user = null;
 (function () {
     window.config = {
         instance: 'https://login.microsoftonline.com/',
-        tenant: 'gpeipmanhotmail.onmicrosoft.com',
-        clientId: 'cbb1e71f-87f3-46bd-a2e6-ffdcd43865d9',
+        tenant: '<Your tenant URL>',
+        clientId: '<Your app client ID>',
         postLogoutRedirectUri: window.location.origin,
         cacheLocation: 'localStorage' // enable this for IE, as sessionStorage does not work for localhost.
     };
