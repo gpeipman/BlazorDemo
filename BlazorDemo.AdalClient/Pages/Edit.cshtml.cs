@@ -42,10 +42,20 @@ namespace BlazorDemo.AdalClient.Pages
 
         protected void Save()
         {
+            var book = CurrentBook;
+
             Action<string> action = async (token) =>
             {
-                BooksClient.Token = token;
-                await BooksClient.SaveBook(CurrentBook);
+                try
+                {
+                    BooksClient.Token = token;
+                    
+                    await BooksClient.SaveBook(book);
+                }
+                catch
+                {
+                    // Let's suppress weird arbitrary errors
+                }
 
                 UriHelper.NavigateTo("/page/1");
             };
