@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
@@ -36,7 +37,7 @@ namespace BlazorDemo.AdalClient.Pages
             UriHelper.NavigateTo("/page/" + page);
         }
 
-        protected void AddNew()
+        protected async Task AddNew()
         {
             UriHelper.NavigateTo("/edit/0");
         }

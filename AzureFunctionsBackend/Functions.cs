@@ -52,6 +52,8 @@ namespace BlazorDemo.AzureFunctionsBackend
 
                 context.Update(book);
                 context.SaveChanges();
+
+                AzureSearchClient.IndexBook(book, log);
             }
 
             return null;
@@ -71,6 +73,14 @@ namespace BlazorDemo.AzureFunctionsBackend
                 context.Books.Remove(book);
                 await context.SaveChangesAsync();
             }
+        }
+
+        [FunctionName("Search")]
+        public static IActionResult Search([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Search/{page}/{term}")]HttpRequest req, TraceWriter log, [FromRoute]string term, [FromRoute]int page)
+        {
+            var results = AzureSearchClient.Search(term, page);
+
+            return new JsonResult(results);
         }
     }
 }
