@@ -1,6 +1,6 @@
 using System;
-using System.Threading.Tasks;
 using BlazorDemo.Shared;
+using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
 
@@ -12,11 +12,14 @@ namespace BlazorDemo.AdalClient.Pages
         protected string Page { get; set; } = "1";
 
         protected int DeleteId { get; set; } = 0;
-        protected PagedResult<Book> Books;
+        protected PagedResult<Book> Books { get; set; }
+        [Parameter]
+        protected string SearchTerm { get; set; }
 
         protected override void OnParametersSet()
         {
-            LoadBooks(int.Parse(Page));
+            SearchClick();
+            //LoadBooks(int.Parse(Page));
         }
 
         private void LoadBooks(int page)
@@ -34,12 +37,57 @@ namespace BlazorDemo.AdalClient.Pages
 
         protected void PagerPageChanged(int page)
         {
-            UriHelper.NavigateTo("/page/" + page);
+            if (string.IsNullOrEmpty(SearchTerm))
+            {
+                UriHelper.NavigateTo("/page/" + page);
+            }
+            else
+            {
+                UriHelper.NavigateTo("/page/" + page + "/" + SearchTerm);
+            }
         }
 
-        protected async Task AddNew()
+        protected void AddNew()
         {
             UriHelper.NavigateTo("/edit/0");
+        }
+
+        protected void SearchClick()
+        {
+            if(string.IsNullOrEmpty(SearchTerm))
+            {
+                LoadBooks(int.Parse(Page));
+                return;
+            }
+
+            Search(SearchTerm, int.Parse(Page));
+        }
+
+        private void Search(string term, int page)
+        {
+            Action<string> action = async (token) =>
+            {
+                BooksClient.Token = token;
+                Books = await BooksClient.SearchBooks(term, page);
+
+                StateHasChanged();
+            };
+
+            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+        }
+
+        protected void SearchBoxKeyPress(UIKeyboardEventArgs ev)
+        {
+            if(ev.Key == "Enter")
+            {
+                SearchClick();
+            }
+        }
+
+        protected void ClearClick()
+        {
+            SearchTerm = "";
+            LoadBooks(1);
         }
 
         protected void EditBook(int id)

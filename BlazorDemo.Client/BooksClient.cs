@@ -46,7 +46,7 @@ namespace BlazorDemo.Client
             await _httpClient.PostJsonAsync<Book>(url, book);
         }
 
-        public async Task<PagedResult<Book>> SearchBooks(string term)
+        public async Task<PagedResult<Book>> SearchBooks(string term, int page)
         {
             throw new NotImplementedException();
         }

@@ -9,8 +9,8 @@ namespace BlazorDemo.AdalClient
     {
         private readonly HttpClient _httpClient;
 
-        private const string FunctionsHost = "<Your functions host here>/api";
-        private const string FunctionsKey = "<Your functions key here>";
+        private const string FunctionsHost = "https://*****.azurewebsites.net/api";
+        private const string FunctionsKey = "<YOUR FUNCTIONS KEY>";
 
         public string Token { get; set; }
 
@@ -75,7 +75,7 @@ namespace BlazorDemo.AdalClient
             await _httpClient.PostJsonAsync<Book>(url, book);
         }
 
-        public async Task<PagedResult<Book>> SearchBooks(string term)
+        public async Task<PagedResult<Book>> SearchBooks(string term, int page)
         {
             if (!string.IsNullOrEmpty(Token))
             {
@@ -83,7 +83,7 @@ namespace BlazorDemo.AdalClient
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             }
 
-            var url = FunctionsHost + "/Books/Search/1/" + term + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Search/" + page + "/" + term + "?code=" + FunctionsKey;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
         }

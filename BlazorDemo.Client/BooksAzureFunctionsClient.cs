@@ -52,7 +52,7 @@ namespace BlazorDemo.Client
             await _httpClient.PostJsonAsync<Book>(url, book);
         }
 
-        public async Task<PagedResult<Book>> SearchBooks(string term)
+        public async Task<PagedResult<Book>> SearchBooks(string term, int page)
         {
             if (!string.IsNullOrEmpty(Token))
             {
@@ -60,7 +60,7 @@ namespace BlazorDemo.Client
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             }
 
-            var url = FunctionsHost + "/Books/Search" + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Search/" + page + "/" + term + "?code=" + FunctionsKey;
             url += "&term=" + term;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
