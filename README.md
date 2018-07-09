@@ -12,13 +12,35 @@ Solution contains:
 * Fully functioning add/edit form
 * Pager component and support for data paging
 * Dependency injection with custom service classes
+* Protecting Blazor application and Azure Functions based back-end using Azure AD
+
+## Azure AD example
+
+For Azure AD there are two project in solution:
+
+* BlazorDemo.AdalClient - Blazor web application that supports Azure AD
+* BlazorDemo.AzureFunctionsBackend - Azure Functions project with all functions that form back-end for Blazor application
+
+On Azure the following services are needed:
+
+* Azure AD - free one is okay
+* App regitration on Azure AD - Web/Web API type of application
+* Azure Functions - minimal App Service where functions run is okay
+* Azure Storage GPv2 with static websites enabled (optional)
+
+Configuration in code files:
+
+* BlazorDemo.AdalClient project wwwroot/js/app.js - Azure AD tenant ID and application ID
+* BlazorDemo.AdalClient project BooksAzureFunctionsClient.cs - Azure Functions host and Azure AD application ID
+
+More information is available in my blog post [Azure AD authentication in Blazor using ADAL.js](https://gunnarpeipman.com/aspnet/blazor-azure-ad-adal/).
 
 ## Tools
 
 As of 2018-05-09 the following tooling is needed to build Blazor applications:
 
-* [.NET Core 2.1 Preview 2 SDK](https://www.microsoft.com/net/download/dotnet-core/sdk-2.1.300-preview2)
-* [Preview version of Visual Studio 2017 (15.7)](https://www.visualstudio.com/vs/preview/)
+* [.NET Core 2.1.1 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.301-windows-x86-installer)
+* [Visual Studio 2017 (15.8)](https://www.visualstudio.com/vs/)
 * ASP.NET and web development workload for Visual Studio (activate during VS installation)
 * [ASP.NET Core Blazor Language Services extension](https://go.microsoft.com/fwlink/?linkid=870389)
 * [Getting started with Blazor](http://gunnarpeipman.com/2018/04/blazor-preview/)
@@ -28,3 +50,13 @@ As of 2018-05-09 the following tooling is needed to build Blazor applications:
 If you tried out this solution and you understand how Blazor works then please find some moments to 
 take [brief survey by Microsoft](https://go.microsoft.com/fwlink/?linkid=873042) helping to make Blazor 
 even better.
+
+## References
+
+* [Azure AD authentication in Blazor using ADAL.js](https://gunnarpeipman.com/aspnet/blazor-azure-ad-adal/)
+* [Hosting Azure Functions backed Blazor application on Azure Storage static website](https://gunnarpeipman.com/azure/blazor-azure-function-static-website/)
+* [Building confirm delete dialog on Blazor](https://gunnarpeipman.com/aspnet/blazor-confirm-delete-dialog/)
+* [Dependency injection in Blazor](https://gunnarpeipman.com/aspnet/blazor-dependency-injection/)
+* [Building Blazor pager component](https://gunnarpeipman.com/aspnet/blazor-pager-component/)
+* [Separating code and presentation of Blazor pages](https://gunnarpeipman.com/aspnet/blazor-code-behind/)
+* [WebAssembly apps with Blazor](https://gunnarpeipman.com/aspnet/blazor-preview/)
