@@ -24,6 +24,7 @@ For Azure AD there are two project in solution:
 On Azure the following services are needed:
 
 * Azure AD - free one is okay
+* Azure Search - free tier is okay
 * App regitration on Azure AD - Web/Web API type of application
 * Azure Functions - minimal App Service where functions run is okay
 * Azure Storage GPv2 with static websites enabled (optional)
@@ -32,6 +33,7 @@ Configuration in code files:
 
 * BlazorDemo.AdalClient project wwwroot/js/app.js - Azure AD tenant ID and application ID
 * BlazorDemo.AdalClient project BooksAzureFunctionsClient.cs - Azure Functions host and Azure AD application ID
+* BlazorDemo.AzureFunctionsBackend project AzureSearchClient - Azure Search service and index name, access key
 
 More information is available in my blog post [Azure AD authentication in Blazor using ADAL.js](https://gunnarpeipman.com/aspnet/blazor-azure-ad-adal/).
 
