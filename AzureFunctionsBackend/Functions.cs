@@ -42,7 +42,7 @@ namespace BlazorDemo.AzureFunctionsBackend
         }
 
         [FunctionName("Save")]
-        public static IActionResult Save([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Save")]HttpRequest req, TraceWriter log)
+        public static async Task Save([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Save")]HttpRequest req, TraceWriter log)
         {
             using (var reader = new StreamReader(req.Body, Encoding.UTF8))
             using (var context = (new BooksDbContextFactory()).CreateDbContext())
@@ -52,9 +52,9 @@ namespace BlazorDemo.AzureFunctionsBackend
 
                 context.Update(book);
                 context.SaveChanges();
-            }
 
-            return null;
+                await AzureSearchClient.IndexBook(book, log);
+            }
         }
 
         [FunctionName("Delete")]
@@ -70,7 +70,17 @@ namespace BlazorDemo.AzureFunctionsBackend
 
                 context.Books.Remove(book);
                 await context.SaveChangesAsync();
+
+                await AzureSearchClient.RemoveBook(book.Id);
             }
+        }
+
+        [FunctionName("Search")]
+        public static async Task<IActionResult> Search([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Search/{page}/{term}")]HttpRequest req, TraceWriter log, [FromRoute]string term, [FromRoute]int page)
+        {
+            var results = await AzureSearchClient.Search(term, page);
+
+            return new JsonResult(results);
         }
     }
 }

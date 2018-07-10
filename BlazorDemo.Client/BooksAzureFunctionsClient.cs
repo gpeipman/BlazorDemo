@@ -51,5 +51,19 @@ namespace BlazorDemo.Client
 
             await _httpClient.PostJsonAsync<Book>(url, book);
         }
+
+        public async Task<PagedResult<Book>> SearchBooks(string term, int page)
+        {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            }
+
+            var url = FunctionsHost + "/Books/Search/" + page + "/" + term + "?code=" + FunctionsKey;
+            url += "&term=" + term;
+
+            return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
+        }
     }
 }

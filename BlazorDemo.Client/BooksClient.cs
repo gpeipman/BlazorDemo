@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor;
@@ -43,6 +44,11 @@ namespace BlazorDemo.Client
             var url = "/Books/Save";
 
             await _httpClient.PostJsonAsync<Book>(url, book);
+        }
+
+        public async Task<PagedResult<Book>> SearchBooks(string term, int page)
+        {
+            throw new NotImplementedException();
         }
     }
 }

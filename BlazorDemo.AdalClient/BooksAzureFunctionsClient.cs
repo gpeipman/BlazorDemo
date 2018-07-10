@@ -74,5 +74,18 @@ namespace BlazorDemo.AdalClient
 
             await _httpClient.PostJsonAsync<Book>(url, book);
         }
+
+        public async Task<PagedResult<Book>> SearchBooks(string term, int page)
+        {
+            if (!string.IsNullOrEmpty(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            }
+
+            var url = FunctionsHost + "/Books/Search/" + page + "/" + term + "?code=" + FunctionsKey;
+
+            return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
+        }
     }
 }

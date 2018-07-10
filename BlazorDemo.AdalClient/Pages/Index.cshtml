@@ -1,5 +1,6 @@
 ﻿@page "/"
 @page "/page/{Page}"
+@page "/page/{Page}/{SearchTerm}"
 @inherits IndexModel
 
 <div class="row">
@@ -9,8 +10,13 @@
 </div>
 
 <div class="row margin-bottom-20">
+    <div class="col-md-3">
+        <button class="btn btn-primary" type="button" onclick=@AddNew>Add new</button>
+    </div>
     <div class="col-md-9">
-        <button class="btn btn-primary" onclick=@AddNew>Add new</button>
+        <input type="text" bind="@this.SearchTerm" onkeyup="@SearchBoxKeyPress" />
+        <button class="btn" type="button" onclick="@SearchClick">Search</button>
+        <button class="btn" type="button" onclick="@ClearClick">Clear</button>
     </div>
 </div>
 
@@ -35,7 +41,7 @@ else
                 <td>@book.Id</td>
                 <td>@book.Title</td>
                 <td>@book.ISBN</td>
-                <td>
+                <td style="white-space:nowrap; text-wrap:none">
                     <button type="button" class="btn green" onclick="@(() => EditBook(id) )">...</button>
                     <button type="button" class="btn red deleteBook" onclick="@(() => ConfirmDelete(id, title) )">x</button>
                 </td>
