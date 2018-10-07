@@ -24,6 +24,7 @@ For Azure AD there are two project in solution:
 On Azure the following services are needed:
 
 * Azure AD - free one is okay
+* Azure SQL - instance with minimal size is okay
 * Azure Search - free tier is okay
 * App regitration on Azure AD - Web/Web API type of application
 * Azure Functions - minimal App Service where functions run is okay
@@ -34,6 +35,8 @@ Configuration in code files:
 * BlazorDemo.AdalClient project wwwroot/js/app.js - Azure AD tenant ID and application ID
 * BlazorDemo.AdalClient project BooksAzureFunctionsClient.cs - Azure Functions host and Azure AD application ID
 * BlazorDemo.AzureFunctionsBackend project AzureSearchClient - Azure Search service and index name, access key
+
+BACPAC for SQL Server is in External Files folder. After creating database on SQL Azure it is possible to import it as a data-tier application. Same way it is possible to import it to SQL Server LocalDb used by BlazorDemo.Client project.
 
 More information is available in my blog post [Azure AD authentication in Blazor using ADAL.js](https://gunnarpeipman.com/aspnet/blazor-azure-ad-adal/).
 
