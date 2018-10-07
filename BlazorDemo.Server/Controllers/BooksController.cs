@@ -32,27 +32,25 @@ namespace BlazorDemo.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] Book book)
+        public async Task Save([FromBody] Book book)
         {
             _context.Update(book);
 
             await _context.SaveChangesAsync();
-
-            return Json("");
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task Delete(int id)
         {
             var book = _context.Books.FirstOrDefault(b => b.Id == id);
             if(book == null)
             {
-                return Json("");
+                return;
             }
 
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
 
-            return Json("");
+            return;
         }
     }
 }

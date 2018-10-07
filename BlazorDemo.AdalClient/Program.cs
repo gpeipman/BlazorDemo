@@ -1,6 +1,7 @@
 ﻿using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor.Browser.Rendering;
 using Microsoft.AspNetCore.Blazor.Browser.Services;
+using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorDemo.AdalClient
@@ -14,7 +15,10 @@ namespace BlazorDemo.AdalClient
                 services.AddSingleton<IBooksClient, BooksAzureFunctionsClient>();
             });
 
-            new BrowserRenderer(serviceProvider).AddComponent<App>("app");
+            BlazorWebAssemblyHost.CreateDefaultBuilder()
+                                 .UseBlazorStartup<Startup>()
+                                 .Build()
+                                 .Run();
         }
     }
 }

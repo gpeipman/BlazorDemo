@@ -43,11 +43,13 @@ namespace BlazorDemo.Client
         {
             var url = "/Books/Save";
 
-            await _httpClient.PostJsonAsync<Book>(url, book);
+            await _httpClient.PostJsonAsync(url, book);
         }
 
         public async Task<PagedResult<Book>> SearchBooks(string term, int page)
         {
+            await Task.FromResult(0);
+
             throw new NotImplementedException();
         }
     }

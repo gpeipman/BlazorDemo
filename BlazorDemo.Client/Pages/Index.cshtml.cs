@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorDemo.Client.Pages
 {
@@ -16,7 +16,6 @@ namespace BlazorDemo.Client.Pages
 
         protected override async Task OnParametersSetAsync()
         {
-            Console.WriteLine("Current page: " + Page);
             await LoadBooks(int.Parse(Page));
         }
 
@@ -40,15 +39,16 @@ namespace BlazorDemo.Client.Pages
             UriHelper.NavigateTo("/edit/" + id);
         }
 
-        protected void ConfirmDelete(int id, string title)
+        protected async void ConfirmDelete(int id, string title)
         {
             DeleteId = id;
-            RegisteredFunction.Invoke<bool>("confirmDelete", title);
+
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
         }
 
         protected async Task DeleteBook()
         {
-            RegisteredFunction.Invoke<bool>("hideDeleteDialog");
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.hideDeleteDialog");
 
             await BooksClient.DeleteBook(DeleteId);
             await LoadBooks(int.Parse(Page));

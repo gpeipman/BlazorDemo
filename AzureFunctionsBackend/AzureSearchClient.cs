@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
 
 namespace BlazorDemo.AzureFunctionsBackend
 {
-    
+
     public static class AzureSearchClient
     {
         private static SearchIndexClient GetClient()
@@ -41,7 +41,7 @@ namespace BlazorDemo.AzureFunctionsBackend
             }
         }
 
-        public static async Task IndexBook(Book book, TraceWriter log)
+        public static async Task IndexBook(Book book, ILogger log)
         {
             using (var client = GetClient())
             {

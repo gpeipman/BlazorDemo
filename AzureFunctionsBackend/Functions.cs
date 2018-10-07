@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace BlazorDemo.AzureFunctionsBackend
@@ -16,7 +17,7 @@ namespace BlazorDemo.AzureFunctionsBackend
     public static class Functions
     {
         [FunctionName("Index")]
-        public static IActionResult Index([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Index/page/{page}")]HttpRequest req, TraceWriter log, [FromRoute] int page)
+        public static IActionResult Index([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Index/page/{page}")]HttpRequest req, ILogger log, [FromRoute] int page)
         {
             if (page <= 0) page = 1;
 
@@ -31,7 +32,7 @@ namespace BlazorDemo.AzureFunctionsBackend
         }
 
         [FunctionName("Get")]
-        public static IActionResult Get([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Get/{id}")]HttpRequest req, TraceWriter log, [FromRoute]int id)
+        public static IActionResult Get([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Get/{id}")]HttpRequest req, ILogger log, [FromRoute]int id)
         {
             using (var context = (new BooksDbContextFactory()).CreateDbContext())
             {
@@ -42,7 +43,7 @@ namespace BlazorDemo.AzureFunctionsBackend
         }
 
         [FunctionName("Save")]
-        public static async Task Save([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Save")]HttpRequest req, TraceWriter log)
+        public static async Task Save([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Save")]HttpRequest req, ILogger log)
         {
             using (var reader = new StreamReader(req.Body, Encoding.UTF8))
             using (var context = (new BooksDbContextFactory()).CreateDbContext())
@@ -58,7 +59,7 @@ namespace BlazorDemo.AzureFunctionsBackend
         }
 
         [FunctionName("Delete")]
-        public static async Task Delete([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Delete/{id}")]HttpRequest req, TraceWriter log, [FromRoute]int id)
+        public static async Task Delete([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Delete/{id}")]HttpRequest req, ILogger log, [FromRoute]int id)
         {
             using (var context = (new BooksDbContextFactory()).CreateDbContext())
             {
@@ -76,7 +77,7 @@ namespace BlazorDemo.AzureFunctionsBackend
         }
 
         [FunctionName("Search")]
-        public static async Task<IActionResult> Search([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Search/{page}/{term}")]HttpRequest req, TraceWriter log, [FromRoute]string term, [FromRoute]int page)
+        public static async Task<IActionResult> Search([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "Books/Search/{page}/{term}")]HttpRequest req, ILogger log, [FromRoute]string term, [FromRoute]int page)
         {
             var results = await AzureSearchClient.Search(term, page);
 

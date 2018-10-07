@@ -27,48 +27,47 @@ var user = null;
 
 }());
 
-Blazor.registerFunction('confirmDelete', (title) => {
-    $('#bookTitleField').text(title);
-    $('#myModal').modal('show');
+window.blazorDemoInterop = {
+    confirmDelete: function (title) {
+        $('#bookTitleField').text(title);
+        $('#myModal').modal('show');
 
-    return true;
-});
+        return true;
+    },
+    hideDeleteDialog: function () {
+        $('#myModal').modal('hide');
 
-Blazor.registerFunction('hideDeleteDialog', () => {
-    $('#myModal').modal('hide');
+        return true;
+    },
+    getUserName: function () {
+        if (user === null) {
+            return '';
+        }
 
-    return true;
-});
+        return user.profile.name;
+    },
+    executeWithToken: function (action) {
+        authContext.acquireToken(authContext.config.clientId, function (error, token) {
+            let tokenString = Blazor.platform.toDotNetString(token);
 
-Blazor.registerFunction('getUserName', () => {
-    if (user == null) {
-        return '';
+            const assemblyName = 'BlazorDemo.AdalClient';
+            const namespace = 'BlazorDemo.AdalClient';
+            const typeName = 'AdalHelper';
+            const methodName = 'RunAction';
+
+            const runActionMethod = Blazor.platform.findMethod(
+                assemblyName,
+                namespace,
+                typeName,
+                methodName
+            );
+
+            Blazor.platform.callMethod(runActionMethod, null, [
+                action, tokenString
+            ]);
+
+        });
+
+        return true;
     }
-
-    return user.profile.name;
-});
-
-Blazor.registerFunction('executeWithToken', (action) => {
-    authContext.acquireToken(authContext.config.clientId, function (error, token) {
-        let tokenString = Blazor.platform.toDotNetString(token);
-
-        const assemblyName = 'BlazorDemo.AdalClient';
-        const namespace = 'BlazorDemo.AdalClient';
-        const typeName = 'AdalHelper';
-        const methodName = 'RunAction';
-
-        const runActionMethod = Blazor.platform.findMethod(
-            assemblyName,
-            namespace,
-            typeName,
-            methodName
-        );
-
-        Blazor.platform.callMethod(runActionMethod, null, [
-            action, tokenString
-        ]);
-
-    });
-
-    return true;
-});
+};

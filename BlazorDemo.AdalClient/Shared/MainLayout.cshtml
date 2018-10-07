@@ -1,5 +1,5 @@
 @inherits BlazorLayoutComponent
-@using Microsoft.AspNetCore.Blazor.Browser.Interop
+@using Microsoft.JSInterop;
 
 <div class="sidebar">
     <NavMenu />
@@ -19,8 +19,8 @@
 @functions {
     protected string UserName { get; set; }
 
-    protected override void OnParametersSet()
+    protected async override void OnParametersSet()
     {
-        UserName = RegisteredFunction.Invoke<string>("getUserName");
+        UserName = await JSRuntime.Current.InvokeAsync<string>("blazorDemoInterop.getUserName");
     }
 }

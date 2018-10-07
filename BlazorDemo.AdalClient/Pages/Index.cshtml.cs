@@ -1,8 +1,9 @@
 using System;
+using System.Threading.Tasks;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorDemo.AdalClient.Pages
 {
@@ -16,13 +17,12 @@ namespace BlazorDemo.AdalClient.Pages
         [Parameter]
         protected string SearchTerm { get; set; }
 
-        protected override void OnParametersSet()
+        protected override async void OnParametersSet()
         {
-            SearchClick();
-            //LoadBooks(int.Parse(Page));
+            await SearchClick();
         }
 
-        private void LoadBooks(int page)
+        private async Task LoadBooks(int page)
         {
             Action<string> action = async (token) => 
             {
@@ -32,7 +32,7 @@ namespace BlazorDemo.AdalClient.Pages
                 StateHasChanged();           
             };
 
-            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
         }
 
         protected void PagerPageChanged(int page)
@@ -52,18 +52,18 @@ namespace BlazorDemo.AdalClient.Pages
             UriHelper.NavigateTo("/edit/0");
         }
 
-        protected void SearchClick()
+        protected async Task SearchClick()
         {
             if(string.IsNullOrEmpty(SearchTerm))
             {
-                LoadBooks(int.Parse(Page));
+                await LoadBooks(int.Parse(Page));
                 return;
             }
 
-            Search(SearchTerm, int.Parse(Page));
+            await Search(SearchTerm, int.Parse(Page));
         }
 
-        private void Search(string term, int page)
+        private async Task Search(string term, int page)
         {
             Action<string> action = async (token) =>
             {
@@ -73,21 +73,21 @@ namespace BlazorDemo.AdalClient.Pages
                 StateHasChanged();
             };
 
-            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
         }
 
-        protected void SearchBoxKeyPress(UIKeyboardEventArgs ev)
+        protected async void SearchBoxKeyPress(UIKeyboardEventArgs ev)
         {
             if(ev.Key == "Enter")
             {
-                SearchClick();
+                await SearchClick();
             }
         }
 
-        protected void ClearClick()
+        protected async Task ClearClick()
         {
             SearchTerm = "";
-            LoadBooks(1);
+            await LoadBooks(1);
         }
 
         protected void EditBook(int id)
@@ -95,26 +95,27 @@ namespace BlazorDemo.AdalClient.Pages
             UriHelper.NavigateTo("/edit/" + id);
         }
 
-        protected void ConfirmDelete(int id, string title)
+        protected async Task ConfirmDelete(int id, string title)
         {
             DeleteId = id;
-            RegisteredFunction.Invoke<bool>("confirmDelete", title);
+
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
         }
 
-        protected void DeleteBook()
+        protected async void DeleteBook()
         {
-            RegisteredFunction.Invoke<bool>("hideDeleteDialog");
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.hideDeleteDialog");
 
             Action<string> action = async (token) =>
             {
                 BooksClient.Token = token;
                 await BooksClient.DeleteBook(DeleteId);
 
-                LoadBooks(int.Parse(Page));
+                await LoadBooks(int.Parse(Page));
                 StateHasChanged();
             };
 
-            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
         }
     }
 }

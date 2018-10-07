@@ -1,7 +1,7 @@
 using System;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorDemo.AdalClient.Pages
 {
@@ -27,7 +27,7 @@ namespace BlazorDemo.AdalClient.Pages
             }
         }
 
-        protected void LoadBook(int id)
+        protected async void LoadBook(int id)
         {
             Action<string> action = async (token) =>
             {
@@ -37,10 +37,11 @@ namespace BlazorDemo.AdalClient.Pages
                 StateHasChanged();
             };
 
-            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+            //RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
         }
 
-        protected void Save()
+        protected async void Save()
         {
             var book = CurrentBook;
 
@@ -60,7 +61,7 @@ namespace BlazorDemo.AdalClient.Pages
                 UriHelper.NavigateTo("/page/1");
             };
 
-            RegisteredFunction.InvokeUnmarshalled<bool>("executeWithToken", action);
+            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
         }
     }
 }
