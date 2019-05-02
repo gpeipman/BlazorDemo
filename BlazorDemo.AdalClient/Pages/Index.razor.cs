@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Components;
-using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components;
+using Mono.WebAssembly.Interop;
 
 namespace BlazorDemo.AdalClient.Pages
 {
@@ -13,26 +12,28 @@ namespace BlazorDemo.AdalClient.Pages
         protected string Page { get; set; } = "1";
 
         protected int DeleteId { get; set; } = 0;
+
         protected PagedResult<Book> Books { get; set; }
+
         [Parameter]
         protected string SearchTerm { get; set; }
 
-        protected override async void OnParametersSet()
+        protected override void OnParametersSet()
         {
-            await SearchClick();
+            SearchClick();
         }
 
-        private async Task LoadBooks(int page)
+        private void LoadBooks(int page)
         {
-            Action<string> action = async (token) => 
+            Action<string> action = async (token) =>
             {
                 BooksClient.Token = token;
                 Books = await BooksClient.ListBooks(page);
 
-                StateHasChanged();           
+                StateHasChanged();
             };
 
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
+            ((MonoWebAssemblyJSRuntime)JSRuntime).InvokeUnmarshalled<Action<string>, bool>("blazorDemoInterop.executeWithToken", action);
         }
 
         protected void PagerPageChanged(int page)
@@ -52,18 +53,18 @@ namespace BlazorDemo.AdalClient.Pages
             UriHelper.NavigateTo("/edit/0");
         }
 
-        protected async Task SearchClick()
+        protected void SearchClick()
         {
             if(string.IsNullOrEmpty(SearchTerm))
             {
-                await LoadBooks(int.Parse(Page));
+                LoadBooks(int.Parse(Page));
                 return;
             }
 
-            await Search(SearchTerm, int.Parse(Page));
+            Search(SearchTerm, int.Parse(Page));
         }
 
-        private async Task Search(string term, int page)
+        private void Search(string term, int page)
         {
             Action<string> action = async (token) =>
             {
@@ -73,21 +74,21 @@ namespace BlazorDemo.AdalClient.Pages
                 StateHasChanged();
             };
 
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
+            ((MonoWebAssemblyJSRuntime)JSRuntime).InvokeUnmarshalled<Action<string>, bool>("blazorDemoInterop.executeWithToken", action);
         }
 
-        protected async void SearchBoxKeyPress(UIKeyboardEventArgs ev)
+        protected void SearchBoxKeyPress(UIKeyboardEventArgs ev)
         {
             if(ev.Key == "Enter")
             {
-                await SearchClick();
+                SearchClick();
             }
         }
 
-        protected async Task ClearClick()
+        protected void ClearClick()
         {
             SearchTerm = "";
-            await LoadBooks(1);
+            LoadBooks(1);
         }
 
         protected void EditBook(int id)
@@ -99,23 +100,23 @@ namespace BlazorDemo.AdalClient.Pages
         {
             DeleteId = id;
 
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
+            await JSRuntime.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
         }
 
         protected async void DeleteBook()
         {
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.hideDeleteDialog");
+            await JSRuntime.InvokeAsync<bool>("blazorDemoInterop.hideDeleteDialog");
 
             Action<string> action = async (token) =>
             {
                 BooksClient.Token = token;
                 await BooksClient.DeleteBook(DeleteId);
 
-                await LoadBooks(int.Parse(Page));
+                LoadBooks(int.Parse(Page));
                 StateHasChanged();
             };
 
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.executeWithToken", action);
+            ((MonoWebAssemblyJSRuntime)JSRuntime).InvokeUnmarshalled<Action<string>, bool>("blazorDemoInterop.executeWithToken", action);
         }
     }
 }

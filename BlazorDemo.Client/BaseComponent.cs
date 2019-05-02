@@ -1,14 +1,16 @@
-﻿using System.Net.Http;
-using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor.Components;
-using Microsoft.AspNetCore.Blazor.Services;
+﻿using BlazorDemo.Shared;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace BlazorDemo.Client
 {
-    public abstract class BaseComponent : BlazorComponent
+    public abstract class BaseComponent : ComponentBase
     {
         [Inject]
         protected IUriHelper UriHelper { get; set; }
+
+        [Inject]
+        protected IJSRuntime JSRuntime { get; set; }
 
         [Inject]
         protected IBooksClient BooksClient { get; set; }

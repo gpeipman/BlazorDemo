@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BlazorDemo.Data;
 using BlazorDemo.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorDemo.Server.Controllers
 {
@@ -16,17 +17,17 @@ namespace BlazorDemo.Server.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index([FromRoute] int page)
+        public async Task<IActionResult> Index([FromRoute] int page)
         {
-            var books = _context.Books
-                                .OrderBy(b => b.Title)
-                                .GetPaged(page, 10);
+            var books = await _context.Books
+                                      .OrderBy(b => b.Title)
+                                      .GetPagedAsync(page, 10);
             return Json(books);
         }
 
-        public IActionResult Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var book = _context.Books.FirstOrDefault(b => b.Id == id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
 
             return Json(book);
         }
@@ -41,7 +42,7 @@ namespace BlazorDemo.Server.Controllers
 
         public async Task Delete(int id)
         {
-            var book = _context.Books.FirstOrDefault(b => b.Id == id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
             if(book == null)
             {
                 return;
@@ -49,8 +50,6 @@ namespace BlazorDemo.Server.Controllers
 
             _context.Books.Remove(book);
             await _context.SaveChangesAsync();
-
-            return;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using BlazorDemo.Shared;
+﻿using BlazorDemo.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorDemo.Data

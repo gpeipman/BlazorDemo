@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Blazor.Builder;
+﻿using BlazorDemo.Shared;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlazorDemo.AdalClient
@@ -7,9 +8,10 @@ namespace BlazorDemo.AdalClient
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IBooksClient, BooksAzureFunctionsClient>();
         }
 
-        public void Configure(IBlazorApplicationBuilder app)
+        public void Configure(IComponentsApplicationBuilder app)
         {
             app.AddComponent<App>("app");
         }

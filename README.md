@@ -36,6 +36,8 @@ Configuration in code files:
 * BlazorDemo.AdalClient project BooksAzureFunctionsClient.cs - Azure Functions host and Azure AD application ID
 * BlazorDemo.AzureFunctionsBackend project AzureSearchClient - Azure Search service and index name, access key
 
+To use search you have to comment in calls to search service in BooksAzureFunctionsClient.cs (BlazorDemo.AdalClient project)
+
 BACPAC for SQL Server is in External Files folder. After creating database on SQL Azure it is possible to import it as a data-tier application. Same way it is possible to import it to SQL Server LocalDb used by BlazorDemo.Client project.
 
 More information is available in my blog post [Azure AD authentication in Blazor using ADAL.js](https://gunnarpeipman.com/aspnet/blazor-azure-ad-adal/).
@@ -44,8 +46,8 @@ More information is available in my blog post [Azure AD authentication in Blazor
 
 As of 2018-05-09 the following tooling is needed to build Blazor applications:
 
-* [.NET Core 2.1.1 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.301-windows-x86-installer)
-* [Visual Studio 2017 (15.8)](https://www.visualstudio.com/vs/)
+* [.NET Core 3.0 Preview 4 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.301-windows-x86-installer)
+* [Visual Studio 2019](https://www.visualstudio.com/vs/)
 * ASP.NET and web development workload for Visual Studio (activate during VS installation)
 * [ASP.NET Core Blazor Language Services extension](https://go.microsoft.com/fwlink/?linkid=870389)
 * [Getting started with Blazor](http://gunnarpeipman.com/2018/04/blazor-preview/)

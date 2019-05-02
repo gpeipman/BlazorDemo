@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.Client
 {

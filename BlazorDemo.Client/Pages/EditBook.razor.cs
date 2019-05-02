@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.Client.Pages
 {

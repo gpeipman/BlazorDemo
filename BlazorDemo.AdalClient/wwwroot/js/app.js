@@ -4,8 +4,8 @@ var user = null;
 (function () {
     window.config = {
         instance: 'https://login.microsoftonline.com/',
-        tenant: '<tenant host>',
-        clientId: '<application id>',
+        tenant: '<YOUR APP TENANT ID IN AZURE AD>',
+        clientId: '<YOUR APP CLIENT ID IN AZURE AD>',
         postLogoutRedirectUri: window.location.origin,
         cacheLocation: 'localStorage' // enable this for IE, as sessionStorage does not work for localhost.
     };
@@ -41,7 +41,7 @@ window.blazorDemoInterop = {
     },
     getUserName: function () {
         if (user === null) {
-            return '';
+            return Blazor.platform.toDotNetString('');
         }
 
         return user.profile.name;

@@ -2,12 +2,13 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.Client
 {
     public class BooksClient : IBooksClient
     {
+        private readonly string _baseUri = "http://localhost:20497";
         private readonly HttpClient _httpClient;
 
         public string Token { get; set; }
@@ -24,24 +25,24 @@ namespace BlazorDemo.Client
 
         public async Task DeleteBook(int id)
         {
-            await _httpClient.PostAsync("/Books/Delete/" + id, null);
+            await _httpClient.PostAsync(_baseUri + "/Books/Delete/" + id, null);
         }
 
         public async Task<PagedResult<Book>> ListBooks(int page)
         {
-            var url = "/Books/Index/page/" + page;
+            var url = _baseUri + "/Books/Index/page/" + page;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
         }
 
         public async Task<Book> GetBook(int id)
         {
-            return await _httpClient.GetJsonAsync<Book>("/Books/Get/" + id);
+            return await _httpClient.GetJsonAsync<Book>(_baseUri + "/Books/Get/" + id);
         }
 
         public async Task SaveBook(Book book)
         {
-            var url = "/Books/Save";
+            var url = _baseUri + "/Books/Save";
 
             await _httpClient.PostJsonAsync(url, book);
         }

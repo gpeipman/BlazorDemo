@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace BlazorDemo.Client.Pages
@@ -43,12 +43,12 @@ namespace BlazorDemo.Client.Pages
         {
             DeleteId = id;
 
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
+            await JSRuntime.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
         }
 
         protected async Task DeleteBook()
         {
-            await JSRuntime.Current.InvokeAsync<bool>("blazorDemoInterop.hideDeleteDialog");
+            await JSRuntime.InvokeAsync<bool>("blazorDemoInterop.hideDeleteDialog");
 
             await BooksClient.DeleteBook(DeleteId);
             await LoadBooks(int.Parse(Page));

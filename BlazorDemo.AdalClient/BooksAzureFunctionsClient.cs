@@ -1,16 +1,14 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.AdalClient
 {
     public class BooksAzureFunctionsClient : IBooksClient
     {
         private readonly HttpClient _httpClient;
-
-        private const string FunctionsHost = "https://*****.azurewebsites.net/api";
-        private const string FunctionsKey = "<YOUR FUNCTIONS KEY>";
+        private const string FunctionsHost = "<YOUR FUNCTION BASE URL HERE>";
 
         public string Token { get; set; }
 
@@ -37,7 +35,7 @@ namespace BlazorDemo.AdalClient
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             }
 
-            var url = FunctionsHost + "/Books/Delete/" + id + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Delete/" + id;
 
             await _httpClient.PostAsync(url, null);
         }
@@ -50,14 +48,14 @@ namespace BlazorDemo.AdalClient
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             }
 
-            var url = FunctionsHost + "/Books/Index/page/" + page + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Index/page/" + page;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
         }
 
         public async Task<Book> GetBook(int id)
         {
-            var url = FunctionsHost + "/Books/Get/" + id + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Get/" + id;
 
             return await _httpClient.GetJsonAsync<Book>(url);
         }
@@ -70,7 +68,7 @@ namespace BlazorDemo.AdalClient
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             }
 
-            var url = FunctionsHost + "/Books/Save" + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Save";
 
             await _httpClient.PostJsonAsync<Book>(url, book);
         }
@@ -83,7 +81,7 @@ namespace BlazorDemo.AdalClient
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
             }
 
-            var url = FunctionsHost + "/Books/Search/" + page + "/" + term + "?code=" + FunctionsKey;
+            var url = FunctionsHost + "/Books/Search/" + page + "/" + term;
 
             return await _httpClient.GetJsonAsync<PagedResult<Book>>(url);
         }

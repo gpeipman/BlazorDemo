@@ -1,10 +1,10 @@
 using System;
 using BlazorDemo.Shared;
-using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.AspNetCore.Components;
 
-namespace BlazorDemo.AdalClient.Shared
+namespace BlazorDemo.Client.Shared
 {
-    public class PagerModel : BlazorComponent
+    public class PagerModel : ComponentBase
     {
         [Parameter]
         protected PagedResultBase Result { get; set; }
