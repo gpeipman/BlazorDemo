@@ -29,13 +29,6 @@
                 return true;
             }
         };
-
-        Blazor.start({
-            configureSignalR: function (builder) {
-                builder.configureLogging(2); // LogLevel.Information
-                console.log("configuring signalr");
-            }
-        });
     </script>
 </body>
 </html>

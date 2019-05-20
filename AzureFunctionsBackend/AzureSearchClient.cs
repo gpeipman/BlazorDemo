@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Extensions.Logging;

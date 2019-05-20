@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components;
 using Mono.WebAssembly.Interop;
 
@@ -28,7 +28,7 @@ namespace BlazorDemo.AdalClient.Pages
             Action<string> action = async (token) =>
             {
                 BooksClient.Token = token;
-                Books = await BooksClient.ListBooks(page);
+                Books = await BooksClient.ListBooks(page, 10);
 
                 StateHasChanged();
             };

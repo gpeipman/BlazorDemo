@@ -1,4 +1,4 @@
-﻿using BlazorDemo.Shared;
+﻿using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

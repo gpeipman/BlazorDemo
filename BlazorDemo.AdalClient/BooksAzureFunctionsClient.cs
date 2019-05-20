@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.AdalClient
@@ -40,7 +40,7 @@ namespace BlazorDemo.AdalClient
             await _httpClient.PostAsync(url, null);
         }
 
-        public async Task<PagedResult<Book>> ListBooks(int page)
+        public async Task<PagedResult<Book>> ListBooks(int page, int pageSize)
         {
             if(!string.IsNullOrEmpty(Token))
             {

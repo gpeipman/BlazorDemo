@@ -1,5 +1,5 @@
 ﻿using System;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorLibrary.Components

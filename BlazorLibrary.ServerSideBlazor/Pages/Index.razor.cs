@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using BlazorDemo.Data;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
+using BlazorLibrary.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +22,6 @@ namespace BlazorLibrary.ServerSideBlazor.Pages
         private async Task LoadBooks(int page)
         {
             Books = await DataContext.Books.GetPagedAsync(page, 10);
-            //Books = await BooksClient.ListBooks(page);
         }
 
         protected void PagerPageChanged(int page)

@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorDemo.Data\BlazorDemo.Data.csproj" />
-    <ProjectReference Include="..\BlazorDemo.Shared\BlazorDemo.Shared.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlazorLibrary.Components\BlazorLibrary.Components.csproj" />
+    <ProjectReference Include="..\BlazorLibrary.Data\BlazorLibrary.Data.csproj" />
   </ItemGroup>
 
 </Project>

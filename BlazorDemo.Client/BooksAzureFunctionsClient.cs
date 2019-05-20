@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.Client
@@ -31,7 +31,7 @@ namespace BlazorDemo.Client
             await _httpClient.PostAsync(url, null);
         }
 
-        public async Task<PagedResult<Book>> ListBooks(int page)
+        public async Task<PagedResult<Book>> ListBooks(int page, int pageSize)
         {
             var url = FunctionsHost + "/Books/Index/page/" + page + "?code=" + FunctionsKey;
 

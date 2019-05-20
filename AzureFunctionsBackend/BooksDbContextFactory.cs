@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using BlazorDemo.Data;
+using BlazorLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;

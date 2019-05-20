@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorDemo.Client
@@ -28,7 +28,7 @@ namespace BlazorDemo.Client
             await _httpClient.PostAsync(_baseUri + "/Books/Delete/" + id, null);
         }
 
-        public async Task<PagedResult<Book>> ListBooks(int page)
+        public async Task<PagedResult<Book>> ListBooks(int page, int pageSize)
         {
             var url = _baseUri + "/Books/Index/page/" + page;
 

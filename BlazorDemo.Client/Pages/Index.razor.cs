@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
-using BlazorDemo.Shared;
+using BlazorLibrary.Shared;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace BlazorDemo.Client.Pages
 {
@@ -21,7 +19,7 @@ namespace BlazorDemo.Client.Pages
 
         private async Task LoadBooks(int page)
         {
-            Books = await BooksClient.ListBooks(page);
+            Books = await BooksClient.ListBooks(page, 10);
         }
 
         protected void PagerPageChanged(int page)

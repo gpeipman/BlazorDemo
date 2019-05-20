@@ -23,9 +23,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.0.0-preview5-19227-01" />
     <!--<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />-->
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\BlazorDemo.Shared\BlazorDemo.Shared.csproj" />
+    <ProjectReference Include="..\BlazorLibrary.Shared\BlazorLibrary.Shared.csproj" />
   </ItemGroup>
 
 </Project>
