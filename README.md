@@ -44,10 +44,10 @@ More information is available in my blog post [Azure AD authentication in Blazor
 
 ## Tools
 
-As of 2018-05-09 the following tooling is needed to build Blazor applications:
+As of 2019-05-20 the following tooling is needed to build and run this solution:
 
-* [.NET Core 3.0 Preview 4 SDK](https://www.microsoft.com/net/download/thank-you/dotnet-sdk-2.1.301-windows-x86-installer)
-* [Visual Studio 2019](https://www.visualstudio.com/vs/)
+* [.NET Core 3.0 Preview 5 SDK](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-3.0.100-preview5-windows-x86-installer)
+* [Visual Studio 2019 Preview](https://visualstudio.microsoft.com/vs/preview/)
 * ASP.NET and web development workload for Visual Studio (activate during VS installation)
 * [ASP.NET Core Blazor Language Services extension](https://go.microsoft.com/fwlink/?linkid=870389)
 * [Getting started with Blazor](http://gunnarpeipman.com/2018/04/blazor-preview/)
