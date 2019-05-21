@@ -5,7 +5,7 @@ using Microsoft.Azure.Search;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Extensions.Logging;
 
-namespace BlazorDemo.AzureFunctionsBackend
+namespace BlazorAzure.Functions
 {
     public static class AzureSearchClient
     {
@@ -45,7 +45,7 @@ namespace BlazorDemo.AzureFunctionsBackend
             using (var client = GetClient())
             {
                 var azureBook = new { id = book.Id.ToString(), Title = book.Title, ISBN = book.ISBN };
-                var batch = IndexBatch.MergeOrUpload(new [] { azureBook });
+                var batch = IndexBatch.MergeOrUpload(new[] { azureBook });
 
                 await client.Documents.IndexAsync(batch);
             }
