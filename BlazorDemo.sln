@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28902.138
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDemo.Client", "BlazorDemo.Client\BlazorDemo.Client.csproj", "{A690ECF1-E10D-4514-AC0A-E92127053B6F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External Files", "External Files", "{3DEF9835-ADCC-4E7F-87F7-4008CCDCFB38}"
 	ProjectSection(SolutionItems) = preProject
 		External Files\Books.bacpac = External Files\Books.bacpac
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDemo.AzureFunctionsBackend", "AzureFunctionsBackend\BlazorDemo.AzureFunctionsBackend.csproj", "{12B3673A-28A9-4E93-97D2-4C965F900EFF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorDemo.AdalClient", "BlazorDemo.AdalClient\BlazorDemo.AdalClient.csproj", "{D44387AB-3608-4004-918B-64770D3E978D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorLibrary.ServerSideBlazor", "BlazorLibrary.ServerSideBlazor\BlazorLibrary.ServerSideBlazor.csproj", "{2BC56AE1-D9A0-47DE-84B0-FF519A5B34BE}"
 EndProject
@@ -53,18 +47,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A690ECF1-E10D-4514-AC0A-E92127053B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A690ECF1-E10D-4514-AC0A-E92127053B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A690ECF1-E10D-4514-AC0A-E92127053B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A690ECF1-E10D-4514-AC0A-E92127053B6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12B3673A-28A9-4E93-97D2-4C965F900EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12B3673A-28A9-4E93-97D2-4C965F900EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12B3673A-28A9-4E93-97D2-4C965F900EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12B3673A-28A9-4E93-97D2-4C965F900EFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D44387AB-3608-4004-918B-64770D3E978D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D44387AB-3608-4004-918B-64770D3E978D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D44387AB-3608-4004-918B-64770D3E978D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D44387AB-3608-4004-918B-64770D3E978D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BC56AE1-D9A0-47DE-84B0-FF519A5B34BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BC56AE1-D9A0-47DE-84B0-FF519A5B34BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BC56AE1-D9A0-47DE-84B0-FF519A5B34BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
