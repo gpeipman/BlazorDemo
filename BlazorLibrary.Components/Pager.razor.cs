@@ -7,10 +7,10 @@ namespace BlazorLibrary.Components
     public class PagerModel : ComponentBase
     {
         [Parameter]
-        protected PagedResultBase Result { get; set; }
+        public PagedResultBase Result { get; set; }
 
         [Parameter]
-        protected Action<int> PageChanged { get; set; }
+        public Action<int> PageChanged { get; set; }
 
         protected int StartIndex { get; private set; } = 0;
         protected int FinishIndex { get; private set; } = 0;

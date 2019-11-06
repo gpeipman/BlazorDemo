@@ -3,21 +3,22 @@ using BlazorLibrary.Shared;
 using BlazorLibrary.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop;
 
 namespace BlazorLibrary.ServerSideBlazor.Pages
 {
     public class IndexModel : LibraryPageBase
-    {
+    {        
         [Parameter]
-        protected string Page { get; set; } = "1";
+        public string Page { get; set; } = "1";
 
         protected int DeleteId { get; set; } = 0;
         protected PagedResult<Book> Books;        
 
         protected override async Task OnParametersSetAsync()
         {            
-            await LoadBooks(int.Parse(Page));
-        }
+            await LoadBooks(int.Parse(Page ?? "1"));
+        }       
 
         private async Task LoadBooks(int page)
         {
@@ -43,7 +44,7 @@ namespace BlazorLibrary.ServerSideBlazor.Pages
         {
             DeleteId = id;
 
-            await JSRuntime.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);
+            await JSRuntime.InvokeAsync<bool>("blazorDemoInterop.confirmDelete", title);            
         }
 
         protected async Task DeleteBook()

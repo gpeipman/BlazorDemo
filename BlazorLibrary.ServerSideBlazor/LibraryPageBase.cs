@@ -7,7 +7,7 @@ namespace BlazorLibrary.ServerSideBlazor
     public abstract class LibraryPageBase : ComponentBase
     {
         [Inject]
-        protected IUriHelper UriHelper { get; set; }
+        protected NavigationManager UriHelper { get; set; }
 
         [Inject]
         protected IJSRuntime JSRuntime { get; set; }

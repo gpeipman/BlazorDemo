@@ -8,7 +8,7 @@ namespace BlazorLibrary.ServerSideBlazor.Pages
     public class EditBookModel : LibraryPageBase
     {
         [Parameter]
-        protected string Id { get; private set; } = "0";
+        public string Id { get; set; } = "0";
         protected string PageTitle { get; private set; }
         protected Book CurrentBook { get; set; }
 

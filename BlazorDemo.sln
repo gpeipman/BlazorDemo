@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAzure.WebApp", "Blazo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OutOfBox.SharedBlazorComponent", "OutOfBox.SharedBlazorComponent\OutOfBox.SharedBlazorComponent.csproj", "{41564E0E-D3DC-48AF-947B-4ACDFC250D41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutOfBox.SharedComponentDemoApp", "OutOfBox.SharedComponentDemoApp\OutOfBox.SharedComponentDemoApp.csproj", "{37EB17E1-D365-41BE-978E-AC72ABC26B87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OutOfBox.SharedComponentDemoApp", "OutOfBox.SharedComponentDemoApp\OutOfBox.SharedComponentDemoApp.csproj", "{37EB17E1-D365-41BE-978E-AC72ABC26B87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
